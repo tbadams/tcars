@@ -13,6 +13,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Yellow,
     tertiary = Tomato,
     surface = Gold,
+    background = Black,
     onSurface = Black
 )
 

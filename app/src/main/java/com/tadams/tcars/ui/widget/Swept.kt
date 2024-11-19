@@ -21,12 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tadams.tcars.ui.theme.Black
 import com.tadams.tcars.ui.theme.CONTENT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.CONTENT_PADDING
-import com.tadams.tcars.ui.theme.Gold
 import com.tadams.tcars.ui.theme.HORIZONTAL_BAR_HEIGHT
 import com.tadams.tcars.ui.theme.INTER_FRAME_GAP
 import com.tadams.tcars.ui.theme.INTRA_FRAME_GAP
@@ -34,40 +31,6 @@ import com.tadams.tcars.ui.theme.SURFACE_PADDING
 import com.tadams.tcars.ui.theme.SWEPT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.SpaceWhite
 import com.tadams.tcars.ui.theme.TCARSTheme
-
-@Composable
-fun LeftTopElbow(
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
-    radius: Dp = SWEPT_CORNER_RADIUS,
-    content: @Composable () -> Unit = {}
-) {
-    Surface(
-        modifier
-            .defaultMinSize(radius, radius)
-        ,
-        RoundedCornerShape(
-            topStart = radius,
-            topEnd = 0.dp,
-            bottomStart = 0.dp,
-            bottomEnd = 0.dp
-        ),
-        color
-    ) {
-        Box(
-            Modifier
-                .padding(
-                    SURFACE_PADDING,
-                    radius,
-                    SURFACE_PADDING,
-                    SURFACE_PADDING
-                ),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            content()
-        }
-    }
-}
 
 @Composable
 fun Bar(
@@ -93,47 +56,48 @@ fun Bar(
     }
 }
 
-@Composable
-fun HorizontalBar(
-    modifier: Modifier = Modifier,
-    shape: Shape = RoundedCornerShape(0.dp),
-    color: Color = MaterialTheme.colorScheme.surface,
-    alignment: Alignment = Alignment.BottomStart,
-    content: @Composable () -> Unit = {}
-) {
-    Bar(
-        modifier,
-        shape = shape,
-        color = color,
-        alignment = alignment,
-    ) {
-        content()
-    }
-}
-
 
 @Preview
 @Composable
 fun PreviewSwept() {
     TCARSTheme {
         Row(
-            Modifier.padding(top = INTER_FRAME_GAP / 2)
+            Modifier
+                .height(IntrinsicSize.Max)
+                .padding(top = INTER_FRAME_GAP / 2)
         ) {
             Column(
                 Modifier.width(IntrinsicSize.Max)
             ) {
-                LeftTopElbow(
-                    Modifier, Gold
+                Bar(
+                    shape = RoundedCornerShape(topStart = SWEPT_CORNER_RADIUS),
+                    alignment = Alignment.BottomEnd
                 ) {
-                    Text("HELLO WORLD")
+                    Text(
+                        "HELLO WORLD",
+                        Modifier.padding(
+                            top = SWEPT_CORNER_RADIUS - SURFACE_PADDING)
+                    )
                 }
                 Spacer(Modifier.height(INTRA_FRAME_GAP))
-                Surface(
+                Bar(
                     Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    color = Gold,
                 ) {
+
+                }
+                Spacer(Modifier.height(INTRA_FRAME_GAP))
+                Bar(
+                    Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(bottomStart = SWEPT_CORNER_RADIUS),
+                    alignment = Alignment.TopEnd
+                ) {
+                    Text(
+                        "YO",
+                        Modifier.padding(
+                            bottom = SWEPT_CORNER_RADIUS - SURFACE_PADDING)
+                    )
                 }
 
             }
@@ -143,33 +107,17 @@ fun PreviewSwept() {
                 Row {
                     Bar(Modifier.fillMaxWidth())
                 }
-                Box {
-                    Surface(
-                        Modifier.defaultMinSize(
-                            HORIZONTAL_BAR_HEIGHT,
-                            HORIZONTAL_BAR_HEIGHT),
-                        color = Gold
-                    ) {
-                        Box(
-                            Modifier
-                                .defaultMinSize(
-                                    CONTENT_CORNER_RADIUS,
-                                    CONTENT_CORNER_RADIUS)
-                                .background(
-                                    Black,
-                                    RoundedCornerShape(
-                                        topStart = CONTENT_CORNER_RADIUS,
-                                        topEnd = 0.dp,
-                                        bottomStart = 0.dp,
-                                        bottomEnd = 0.dp
-                                    )
-                                )
-                        ) {
-
-                        }
-                    }
-                    Column(
-                        Modifier.fillMaxWidth().padding(CONTENT_PADDING)
+                Box (
+                    Modifier.background(MaterialTheme.colorScheme.surface)
+                ) {
+                    Box(
+                        Modifier
+                            .background(MaterialTheme.colorScheme.background, RoundedCornerShape(
+                                topStart = CONTENT_CORNER_RADIUS,
+                                bottomStart = CONTENT_CORNER_RADIUS
+                            ))
+                            .fillMaxWidth()
+                            .padding(CONTENT_PADDING)
                     ) {
                         Text(
                             "Unidentified vessel travelling at sub warp speed, bearing 235.7." +
