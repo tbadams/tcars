@@ -4,7 +4,7 @@ import androidx.compose.ui.unit.dp
 
 // https://archive.ph/k1zdm
 
-val HORIZONTAL_BAR_HEIGHT = 24.dp // 30, 0.5rem
+val HORIZONTAL_BAR_HEIGHT = 20.dp // 30, 0.5rem
 val INTRA_FRAME_GAP = 2.dp // 5,
 val INTER_FRAME_GAP = 4.dp
 val SURFACE_PADDING = 2.dp

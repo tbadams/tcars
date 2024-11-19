@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -190,10 +191,34 @@ private fun PreviewSwept() {
     TCARSTheme(tcarsColorScheme(Tomato, onBackground = TextViolet)) {
         BarFrame(
             startColumn = {
-                BarColumn(true)
+                BarColumn(true) {
+                    Bar(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                    )
+                    Bar(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                    )
+                    Bar(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
+                    )
+                }
             },
-            endColumn = {
-                BarColumn(false)
+            endColumn = null,
+            topRow = {
+                Bar(Modifier.weight(1f))
+                Bar(Modifier.weight(1f))
+                Bar(Modifier.weight(1f))
+            },
+            bottomRow = {
+                Bar(Modifier.weight(1f))
+                Bar(Modifier.weight(1f))
+                Spacer(Modifier.weight(1f))
             },
         ) {
             Text(
