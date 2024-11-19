@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.tadams.tcars.ui.theme.Gold
 import com.tadams.tcars.ui.theme.TCARSTheme
-import com.tadams.tcars.ui.widget.LeftTopElbow
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +35,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Column {
-        LeftTopElbow(
-            Modifier, Gold
-        ) {
             Text("ELBOW")
-        }
     }
 }
 

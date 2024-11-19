@@ -1,21 +1,30 @@
 package com.tadams.tcars.ui.theme
 
-import android.os.Build
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Bluey,
-    secondary = Yellow,
-    tertiary = Tomato,
-    surface = Gold,
-    background = Black,
-    onSurface = Black
+fun tcarsColorScheme(
+    primary: Color = Gold,
+    secondary: Color = Bluey,
+    tertiary: Color = Tomato,
+    surface: Color = primary,
+    onSurface: Color = Black,
+    background: Color = Black,
+    onBackground: Color = SpaceWhite
+) = darkColorScheme(
+    primary = primary,
+    secondary = secondary,
+    tertiary = tertiary,
+    surface = surface,
+    onSurface = onSurface,
+    background = background,
+    onBackground = onBackground
 )
+
+private val DarkColorScheme = tcarsColorScheme()
 
 
     /* Other default colors to override
@@ -30,21 +39,9 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun TCARSTheme(
-    darkTheme: Boolean = true, //isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    colorScheme: ColorScheme = DarkColorScheme,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> DarkColorScheme
-    }
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
