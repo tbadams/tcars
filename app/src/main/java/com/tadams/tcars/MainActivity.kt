@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,9 +27,12 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.tadams.tcars.app.model.ShuttleCluster
 import com.tadams.tcars.ui.theme.Gold
 import com.tadams.tcars.ui.theme.TCARSTheme
 import com.tadams.tcars.ui.theme.tcarsSubheader
+import com.tadams.tcars.ui.widget.Bar
+import com.tadams.tcars.ui.widget.BarButton
 import com.tadams.tcars.ui.widget.BarColumn
 import com.tadams.tcars.ui.widget.BarFrame
 import com.tadams.tcars.ui.widget.Button
@@ -55,7 +59,10 @@ fun Content(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         BarFrame(
             startColumn = {
-                BarColumn(true, topContent = null)
+                BarColumn(
+                    true,
+                    topContent = null
+                )
             },
             topRow = null,
         ) {
@@ -77,7 +84,17 @@ fun Content(modifier: Modifier = Modifier) {
         BarFrame(
             Modifier.weight(1f),
             startColumn = {
-                BarColumn(true)
+                BarColumn(true) {
+                    ShuttleCluster.forEach {
+                        BarButton(
+                            {},
+                            Modifier.fillMaxWidth(),
+                        ) {
+                            Text(it.displayName)
+                        }
+                    }
+                    Bar(Modifier.fillMaxWidth().weight(1f))
+                }
             }
         ) {
             val ss = rememberScrollState()

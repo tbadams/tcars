@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 val HORIZONTAL_BAR_HEIGHT = 16.dp // 30, 0.5rem
 val INTRA_FRAME_GAP = 2.dp // 5,
 val INTER_FRAME_GAP = 4.dp
-val SURFACE_PADDING = 2.dp
+val SURFACE_PADDING = 4.dp
 
 val SWEPT_CORNER_RADIUS = 64.dp // 75, 160
 val CONTENT_CORNER_RADIUS = 28.dp // 37.5, 60

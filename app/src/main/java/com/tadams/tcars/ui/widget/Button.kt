@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalContentColor
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tadams.tcars.ui.theme.BIG_BUTTON_WIDTH
+import com.tadams.tcars.ui.theme.SURFACE_PADDING
 import com.tadams.tcars.ui.theme.TCARSTheme
 
 @Composable
@@ -39,7 +41,12 @@ fun Button(
     shape: Shape = ButtonDefaults.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = PaddingValues(
+        16.dp,
+        8.dp,
+        16.dp,
+        8.dp
+    ),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
@@ -76,6 +83,31 @@ fun Button(
 }
 
 @Composable
+fun BarButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = PaddingValues(
+        SURFACE_PADDING
+    ),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable RowScope.() -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        shape = RoundedCornerShape(0.dp),
+        colors = colors,
+        border = border,
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+        content = content
+    )
+}
+@Composable
 internal fun ProvideContentColorTextStyle(
     contentColor: Color,
     textStyle: TextStyle,
@@ -99,5 +131,16 @@ fun PreviewButton () {
             Text("BUTTON")
         }
     }
+}
 
+@Preview
+@Composable
+fun PreviewBarButton () {
+    TCARSTheme {
+        BarButton(
+            onClick = { /*TODO*/ }
+        ) {
+            Text("BUTTON")
+        }
+    }
 }

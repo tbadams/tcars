@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.tadams.tcars.ui.theme.BIG_BUTTON_WIDTH
 import com.tadams.tcars.ui.theme.Bluey
 import com.tadams.tcars.ui.theme.CONTENT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.CONTENT_PADDING
@@ -81,6 +82,7 @@ fun BarColumn(
     content: @Composable (ColumnScope.() -> Unit)? = {
         Bar(
             Modifier
+                .defaultMinSize(BIG_BUTTON_WIDTH, 8.dp)
                 .fillMaxWidth()
                 .weight(1f),
         )

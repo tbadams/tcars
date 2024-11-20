@@ -23,7 +23,7 @@ fun tcarsType(
     subheader: TextStyle = TextStyle(
         fontFamily = antonio,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
+        fontSize = 19.sp,
         letterSpacing = (0.0).sp
     ),
     body: TextStyle = TextStyle(
