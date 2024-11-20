@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,13 +32,11 @@ import androidx.compose.ui.unit.dp
 import com.tadams.tcars.ui.theme.Bluey
 import com.tadams.tcars.ui.theme.CONTENT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.CONTENT_PADDING
-import com.tadams.tcars.ui.theme.Gold
 import com.tadams.tcars.ui.theme.HORIZONTAL_BAR_HEIGHT
 import com.tadams.tcars.ui.theme.INTER_FRAME_GAP
 import com.tadams.tcars.ui.theme.INTRA_FRAME_GAP
 import com.tadams.tcars.ui.theme.SURFACE_PADDING
 import com.tadams.tcars.ui.theme.SWEPT_CORNER_RADIUS
-import com.tadams.tcars.ui.theme.SpaceWhite
 import com.tadams.tcars.ui.theme.Sunflower
 import com.tadams.tcars.ui.theme.TCARSTheme
 import com.tadams.tcars.ui.theme.TextViolet
@@ -154,12 +153,13 @@ fun BarFrame(
                 topRow?.invoke(this)
             }
             Box(
-                Modifier.background(MaterialTheme.colorScheme.surface)
+                Modifier.weight(1f).background(MaterialTheme.colorScheme.surface)
             ) {
                     Box(
                         Modifier
                             .background(MaterialTheme.colorScheme.background, contentShape)
                             .fillMaxWidth()
+                            .fillMaxHeight()
                             .padding(CONTENT_PADDING)
                     ) {
                         CompositionLocalProvider(
@@ -227,7 +227,8 @@ private fun PreviewSwept() {
                 "A strange set-up, but I'd say the graviton generator is depolarized. " +
                 "The dark colourings of the scrapes are the leavings of natural rubber," +
                 " a type of non-conductive sole used by researchers experimenting with electricity." +
-                " The molecules must have been partly de-phased by the anyon beam.")
+                " The molecules must have been partly de-phased by the anyon beam."
+            )
         }
     }
 }
@@ -244,7 +245,8 @@ private fun PreviewRightFrame() {
             Text(
                 "Cmdr Riker's nervous system has been invaded by an unknown microorganism. " +
                     "The organisms fuse to the nerve, intertwining at the molecular level. " +
-                    "That's why the transporter's biofilters couldn't extract it."
+                    "That's why the transporter's biofilters couldn't extract it.",
+                Modifier.padding(bottom = 50.dp)
             )
         }
     }

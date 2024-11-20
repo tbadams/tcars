@@ -8,16 +8,22 @@ import androidx.compose.ui.graphics.Color
 
 fun tcarsColorScheme(
     primary: Color = Gold,
+    onPrimary: Color = Black,
     secondary: Color = Bluey,
+    onSecondary: Color = Black,
     tertiary: Color = Tomato,
+    onTertiary: Color = Black,
     surface: Color = primary,
     onSurface: Color = Black,
     background: Color = Black,
     onBackground: Color = SpaceWhite
 ) = darkColorScheme(
     primary = primary,
+    onPrimary = onPrimary,
     secondary = secondary,
+    onSecondary = onSecondary,
     tertiary = tertiary,
+    onTertiary = onTertiary,
     surface = surface,
     onSurface = onSurface,
     background = background,
