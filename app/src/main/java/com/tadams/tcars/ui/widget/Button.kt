@@ -64,7 +64,7 @@ fun Button(
                 Modifier
                     .defaultMinSize(
                         minWidth = BIG_BUTTON_WIDTH,
-                        minHeight = 62.dp
+                        minHeight = 58.dp
                     )
                     .padding(contentPadding),
                 horizontalArrangement = Arrangement.End,

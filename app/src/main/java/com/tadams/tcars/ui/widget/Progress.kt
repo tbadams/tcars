@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,7 +28,7 @@ import kotlin.math.abs
 fun ProgressBar(
     progress: () -> Float,
     modifier: Modifier = Modifier,
-    color: Color = ProgressIndicatorDefaults.linearColor,
+    color: Color = MaterialTheme.colorScheme.secondary,
     trackColor: Color = ProgressIndicatorDefaults.linearTrackColor,
 ) {
     val strokeCap = StrokeCap.Butt

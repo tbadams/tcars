@@ -121,7 +121,7 @@ fun BarColumn(
 @Composable
 fun BarFrame(
     modifier: Modifier = Modifier,
-    startColumn: @Composable (ColumnScope.() -> Unit)? = null,
+    startColumn: @Composable (ColumnScope.() -> Unit)? = {BarColumn(true)},
     endColumn: @Composable (ColumnScope.() -> Unit)? = null,
     topRow: @Composable (RowScope.() -> Unit)? = { Bar(Modifier.fillMaxWidth())},
     bottomRow: @Composable (RowScope.() -> Unit)? = { Bar(Modifier.fillMaxWidth())},
@@ -136,7 +136,7 @@ fun BarFrame(
     Row(
         modifier
             .height(IntrinsicSize.Max)
-            .padding(top = INTER_FRAME_GAP / 2)
+            .padding(vertical = INTER_FRAME_GAP / 2)
     ) {
         Column(
             Modifier.width(IntrinsicSize.Max),
@@ -238,6 +238,7 @@ private fun PreviewSwept() {
 private fun PreviewRightFrame() {
     TCARSTheme {
         BarFrame(
+            startColumn = null,
             endColumn = {
                 BarColumn(false)
             },
@@ -257,6 +258,7 @@ private fun PreviewRightFrame() {
 private fun PreviewTopRightFrame() {
     TCARSTheme(tcarsColorScheme(Bluey, onBackground = Sunflower)) {
         BarFrame(
+            startColumn = null,
             endColumn = {
                 BarColumn(false, bottomContent = null)
             },
