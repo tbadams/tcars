@@ -213,7 +213,7 @@ object SeekBarDefaults {
 
         drawLine( // Track
             inactiveTrackColor,
-            sliderStart,
+            trackStart,
             sliderEnd,
             trackStrokeWidth * LinearIndicatorUnselectedHeightFraction,
             StrokeCap.Square
