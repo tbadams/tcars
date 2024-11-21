@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -122,7 +121,7 @@ fun Content(modifier: Modifier = Modifier) {
                     ProgressBar({0.15f}, Modifier.weight(1f))
                     Text(
                         "15",
-                        Modifier.padding(start = 4.dp),
+                        Modifier.padding(start = 8.dp),
                         color = MaterialTheme.colorScheme.secondary
                     )
                 }
@@ -134,7 +133,17 @@ fun Content(modifier: Modifier = Modifier) {
                 Spacer(Modifier.height(4.dp))
                 ProgressBar({0f}, Modifier.fillMaxWidth())
                 val seekVal = remember { mutableStateOf(0.3f) }
-                SeekBar(seekVal.value, {seekVal.value = it})
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    SeekBar(seekVal.value, {seekVal.value = it}, Modifier.weight(1f))
+                    Text(
+                        "${(seekVal.value * 100).toInt()}",
+                        Modifier.padding(start = 4.dp),
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+
+                }
                 Spacer(Modifier.height(4.dp))
             }
         }
