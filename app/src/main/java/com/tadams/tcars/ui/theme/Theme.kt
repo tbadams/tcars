@@ -1,9 +1,12 @@
 package com.tadams.tcars.ui.theme
 
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 fun tcarsColorScheme(
@@ -51,6 +54,24 @@ fun TCARSTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+    ) {
+        CompositionLocalProvider(
+            androidx.compose.material.ripple.LocalRippleTheme provides TCARSRipple,
+        ) {
+            content()
+        }
+    }
+}
+
+private object TCARSRipple: RippleTheme {
+    @Composable
+    override fun defaultColor(): Color = MaterialTheme.colorScheme.onBackground
+
+    @Composable
+    override fun rippleAlpha(): RippleAlpha = RippleAlpha(
+        .12f,
+        .12f,
+        .16f,
+        .12f
     )
 }

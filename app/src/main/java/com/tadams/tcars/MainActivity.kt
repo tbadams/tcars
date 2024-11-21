@@ -133,7 +133,6 @@ fun Content(modifier: Modifier = Modifier) {
                 ProgressBar({1f}, Modifier.fillMaxWidth())
                 Spacer(Modifier.height(4.dp))
                 ProgressBar({0f}, Modifier.fillMaxWidth())
-                Spacer(Modifier.height(4.dp))
                 val seekVal = remember { mutableStateOf(0.3f) }
                 SeekBar(seekVal.value, {seekVal.value = it})
                 Spacer(Modifier.height(4.dp))
