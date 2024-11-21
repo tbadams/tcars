@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
+import com.tadams.tcars.ui.theme.LinearIndicatorHeight
+import com.tadams.tcars.ui.theme.LinearIndicatorUnselectedHeightFraction
 import com.tadams.tcars.ui.theme.TCARSTheme
 import kotlin.math.abs
 
@@ -42,7 +44,7 @@ fun ProgressBar(
             .size(LinearIndicatorWidth, LinearIndicatorHeight)
     ) {
         val strokeWidth = size.height
-        drawLinearIndicatorTrack(coercedProgress(), 1f,trackColor, strokeWidth * .66f, strokeCap)
+        drawLinearIndicatorTrack(coercedProgress(), 1f,trackColor, strokeWidth * LinearIndicatorUnselectedHeightFraction, strokeCap)
         drawLinearIndicator(0f, coercedProgress(), color, strokeWidth, strokeCap)
     }
 }
@@ -100,7 +102,7 @@ private fun DrawScope.drawLinearIndicatorTrack(
 
 private val gapWidth = 2.dp // Totally wrong but w/e
 private val LinearIndicatorWidth = 240.dp
-private val LinearIndicatorHeight = 16.dp
+
 private val SemanticsBoundsPadding: Dp = (24.dp - LinearIndicatorHeight) / 2
 private val IncreaseSemanticsBounds: Modifier = Modifier
     .layout { measurable, constraints ->
