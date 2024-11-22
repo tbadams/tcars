@@ -19,13 +19,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
@@ -33,7 +31,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogWindowProvider
 import com.tadams.tcars.ui.theme.Black
 import com.tadams.tcars.ui.theme.Blue
 import com.tadams.tcars.ui.theme.Green
@@ -95,7 +92,7 @@ fun SystemCommon(
                 systemName.uppercase(),
                 Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
-                style = MaterialTheme.typography.tcarsSubheader()
+                style = MaterialTheme.typography.tcarsSubheader(),
             )
         }
         if (showInfo.value) {
@@ -104,7 +101,7 @@ fun SystemCommon(
                     showInfo.value = false
                 }
             ) {
-                (LocalView.current.parent as DialogWindowProvider).window.setDimAmount(1f)
+                //(LocalView.current.parent as DialogWindowProvider).window.setDimAmount(1f)
                 Card(
                     Modifier.padding(INTRA_FRAME_GAP),
                     shape = RoundedCornerShape(

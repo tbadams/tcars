@@ -184,7 +184,6 @@ private fun TestContent() {
             Modifier.padding(start = 4.dp),
             color = MaterialTheme.colorScheme.secondary
         )
-
     }
     Spacer(Modifier.height(4.dp))
 }

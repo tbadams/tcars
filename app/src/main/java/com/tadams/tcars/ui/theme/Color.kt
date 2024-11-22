@@ -1,5 +1,6 @@
 package com.tadams.tcars.ui.theme
 
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.ui.graphics.Color
 
 // https://www.thelcars.com/colors.php
@@ -30,3 +31,37 @@ val Magenta = Color(0xFFcc4499)
 val AfricanViolet = Color(0xFFcc88ff)
 val TextViolet = Color(0xFFcc77ff)
 val VioletCreme = Color(0xFFddbbff)
+
+fun tcarsColorScheme(
+    primary: Color = Gold,
+    primaryContainer: Color = Sunflower,
+    secondary: Color = Bluey,
+    secondaryContainer: Color = Ice,
+    tertiary: Color = Red,
+    tertiaryContainer: Color = Tomato,
+    surface: Color = primary,
+    onSurface: Color = Black,
+    background: Color = Black,
+    onBackground: Color = SpaceWhite,
+    onPrimary: Color = onSurface,
+    onSecondary: Color = onSurface,
+    onTertiary: Color = onSurface,
+    error: Color = Mars,
+    onError: Color = onSurface,
+) = darkColorScheme(
+    primary = primary,
+    primaryContainer = primaryContainer,
+    onPrimary = onPrimary,
+    secondary = secondary,
+    secondaryContainer = secondaryContainer,
+    onSecondary = onSecondary,
+    tertiary = tertiary,
+    tertiaryContainer = tertiaryContainer,
+    onTertiary = onTertiary,
+    surface = surface,
+    onSurface = onSurface,
+    background = background,
+    onBackground = onBackground,
+    error = error,
+    onError = onError
+)
