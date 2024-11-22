@@ -50,6 +50,7 @@ import com.tadams.tcars.ui.widget.ProgressBar
 import com.tadams.tcars.ui.widget.SeekBar
 import com.tadams.tcars.ui.widget.SmallButton
 import com.tadams.tcars.ui.widget.WideBarFrame
+import kotlin.math.abs
 
 val FULL_POWER = 100
 val MIN_TEMP = 1
@@ -70,7 +71,8 @@ fun SystemCommon(
     powerSetting: MutableState<Float> = mutableFloatStateOf(1f),
     powerMax: Int = 544,
     powerActual: Int = (powerSetting.value * powerMax).toInt(),
-    temperature: Int = 173 + (powerSetting.value * 100).toInt()
+    temperature: Int = 173 + (powerSetting.value * 100).toInt(),
+    noSafety: Boolean = false
 ) {
     Column(
         modifier
@@ -82,7 +84,10 @@ fun SystemCommon(
             SmallButton(
                 {
                     showInfo.value = true
-                }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                ),
             ) {
                 Text("INFO")
             }
@@ -182,32 +187,34 @@ fun SystemCommon(
                         Modifier.weight(1f)
                     )
                     Text(
-                        "$powerActual",
+                        "${abs(powerActual)}",
                         Modifier.padding(start = 8.dp),
                         color = MaterialTheme.colorScheme.secondary
                     )
                 }
             }
 
-            Spacer(Modifier.width(8.dp))
-            SmallButton(
-                {protected.value = !protected.value},
-                Modifier
-                    .semantics { role = Role.Checkbox }
-                    .toggleable(
-                        protected.value,
-                        enabled = true,
-                        role = Role.Checkbox,
-                        onValueChange = {}
+            if (!noSafety) {
+                Spacer(Modifier.width(8.dp))
+                SmallButton(
+                    {protected.value = !protected.value},
+                    Modifier
+                        .semantics { role = Role.Checkbox }
+                        .toggleable(
+                            protected.value,
+                            enabled = true,
+                            role = Role.Checkbox,
+                            onValueChange = {}
+                        )
+                    ,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (protected.value) {
+                            MaterialTheme.colorScheme.primaryContainer
+                        } else MaterialTheme.colorScheme.surfaceVariant,
                     )
-                ,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (protected.value) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else MaterialTheme.colorScheme.surfaceVariant,
-                )
-            ) {
-                Text("SAFETY")
+                ) {
+                    Text("SAFETY")
+                }
             }
         }
         Spacer(Modifier.height(12.dp))

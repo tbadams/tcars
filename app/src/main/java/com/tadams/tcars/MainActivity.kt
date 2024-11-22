@@ -38,6 +38,7 @@ import com.tadams.tcars.ui.widget.BarButton
 import com.tadams.tcars.ui.widget.BarColumn
 import com.tadams.tcars.ui.widget.BarFrame
 import com.tadams.tcars.ui.widget.Button
+import com.tadams.tcars.ui.widget.ButtonDefaults
 import com.tadams.tcars.ui.widget.ProgressBar
 import com.tadams.tcars.ui.widget.SeekBar
 
@@ -93,9 +94,15 @@ fun Content(modifier: Modifier = Modifier) {
                     ShuttleCluster.forEachIndexed { index, it ->
                         BarButton(
                             {
-                                viewModel.selectedCluster.value = index
+                                viewModel.selectedCluster.intValue = index
                             },
                             Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (index == viewModel.selectedCluster.intValue)
+                                    MaterialTheme.colorScheme.primaryContainer
+                                else
+                                    MaterialTheme.colorScheme.primary
+                            )
                         ) {
                             Text(it.displayName)
                         }
@@ -115,7 +122,8 @@ fun Content(modifier: Modifier = Modifier) {
                         it.protected,
                         it.info.description,
                         powerSetting = it.powerSetting,
-                        powerMax = it.info.powerDraw
+                        powerMax = it.info.powerDraw,
+                        noSafety = it.info.powerDraw < 0
                     )
                     Spacer(Modifier.height(12.dp))
                 }

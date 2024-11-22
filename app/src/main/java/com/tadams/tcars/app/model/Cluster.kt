@@ -15,17 +15,14 @@ val ShuttleCluster = listOf(
             SystemInfo(
                 SystemType.Power,
                 "Impulse Fusion Core",
-                -755
+                -755,
+                maxPowerDraw = -755
             ),
             SystemInfo(
                 SystemType.Power,
                 "Warp Antimatter Reactor",
-                -9800
-            ),
-            SystemInfo(
-                SystemType.Power,
-                "Core Electronics",
-                94
+                -9800,
+                maxPowerDraw = -9800
             )
         )
     ),
@@ -75,6 +72,11 @@ val ShuttleCluster = listOf(
                 "Inertial Dampers",
                 600
             ),
+            SystemInfo(
+                SystemType.Power,
+                "Core Electronics",
+                94
+            )
 
         )
     ),
