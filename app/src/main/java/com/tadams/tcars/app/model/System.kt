@@ -30,7 +30,7 @@ data class SystemInfo(
         "molecular polarization. I haven't determined if our phaser " +
         "energy can generate a stable field. We could alter the photons " +
         "with phase discriminators.\n",
-    val maxPowerDraw: Int = 2 * powerDraw
+    val maxPowerDraw: Int = (1.5f * powerDraw).toInt()
 ) {
 
 }
