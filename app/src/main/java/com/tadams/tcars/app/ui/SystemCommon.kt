@@ -48,8 +48,11 @@ import com.tadams.tcars.ui.widget.SeekBar
 import com.tadams.tcars.ui.widget.SmallButton
 import com.tadams.tcars.ui.widget.WideBarFrame
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 val FULL_POWER = 100
+val STEP_SIZE = 5
+
 val MIN_TEMP = 1
 val COLD_TEMP = 273 // 0C
 val DEFAULT_TEMP = 293 // 20C
@@ -66,8 +69,9 @@ fun SystemCommon(
     systemDescription: String,
     modifier: Modifier = Modifier,
     powerSetting: MutableState<Float> = mutableFloatStateOf(1f),
-    powerMax: Int = 544,
-    powerActual: Int = (powerSetting.value * powerMax).toInt(),
+    powerDraw: Int = 544,
+    powerMax: Int = powerDraw * 2,
+    powerActual: Int = (powerSetting.value * powerDraw).toInt(),
     temperature: Int = 173 + (powerSetting.value * 100).toInt(),
     noSafety: Boolean = false
 ) {
@@ -160,15 +164,17 @@ fun SystemCommon(
                         Modifier.padding(end = 8.dp).defaultMinSize(27.dp),
                         color = MaterialTheme.colorScheme.secondary
                     )
+                    val maxPowerFraction = powerMax.toFloat() / powerDraw
+                    val maxPercent = (maxPowerFraction * FULL_POWER).roundToInt()
                     SeekBar(
-                        powerSetting.value,
-                        {powerSetting.value = it },
+                        powerSetting.value * FULL_POWER,
+                        {powerSetting.value = it / FULL_POWER },
                         Modifier.weight(1f),
-                        steps = 39,
-                        valueRange = 0f..2f
+                        steps = (maxPercent / STEP_SIZE) - 1,
+                        valueRange = 0f..maxPercent.toFloat(),
                     )
                     Text(
-                        "${(powerSetting.value * FULL_POWER).toInt()}",
+                        "${(powerSetting.value * FULL_POWER).roundToInt()}",
                         Modifier.padding(start = 4.dp),
                         color = MaterialTheme.colorScheme.secondary
                     )
@@ -180,7 +186,7 @@ fun SystemCommon(
                         color = MaterialTheme.colorScheme.secondary
                     )
                     ProgressBar(
-                        {powerActual.toFloat() / powerMax},
+                        {powerActual.toFloat() / powerDraw},
                         Modifier.weight(1f)
                     )
                     Text(

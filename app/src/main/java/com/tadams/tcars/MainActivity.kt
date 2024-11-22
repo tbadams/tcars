@@ -122,7 +122,8 @@ fun Content(modifier: Modifier = Modifier) {
                         it.protected,
                         it.info.description,
                         powerSetting = it.powerSetting,
-                        powerMax = it.info.powerDraw,
+                        powerDraw = it.info.powerDraw,
+                        powerMax = it.info.maxPowerDraw,
                         noSafety = it.info.powerDraw < 0
                     )
                     Spacer(Modifier.height(12.dp))
