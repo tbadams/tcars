@@ -13,16 +13,19 @@ import androidx.compose.ui.graphics.Color
 fun tcarsColorScheme(
     primary: Color = Gold,
     primaryContainer: Color = Sunflower,
-    onPrimary: Color = Black,
     secondary: Color = Bluey,
     secondaryContainer: Color = Ice,
-    onSecondary: Color = Black,
-    tertiary: Color = Tomato,
-    onTertiary: Color = Black,
+    tertiary: Color = Red,
+    tertiaryContainer: Color = Tomato,
     surface: Color = primary,
     onSurface: Color = Black,
     background: Color = Black,
-    onBackground: Color = SpaceWhite
+    onBackground: Color = SpaceWhite,
+    onPrimary: Color = onSurface,
+    onSecondary: Color = onSurface,
+    onTertiary: Color = onSurface,
+    error: Color = Mars,
+    onError: Color = onSurface,
 ) = darkColorScheme(
     primary = primary,
     primaryContainer = primaryContainer,
@@ -31,11 +34,14 @@ fun tcarsColorScheme(
     secondaryContainer = secondaryContainer,
     onSecondary = onSecondary,
     tertiary = tertiary,
+    tertiaryContainer = tertiaryContainer,
     onTertiary = onTertiary,
     surface = surface,
     onSurface = onSurface,
     background = background,
-    onBackground = onBackground
+    onBackground = onBackground,
+    error = error,
+    onError = onError
 )
 
 private val DarkColorScheme = tcarsColorScheme()
