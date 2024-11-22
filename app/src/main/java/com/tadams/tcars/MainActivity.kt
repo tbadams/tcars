@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.tadams.tcars
 
 import android.os.Bundle
@@ -27,6 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tadams.tcars.app.model.ShuttleCluster
+import com.tadams.tcars.app.ui.SystemCommon
+import com.tadams.tcars.app.ui.SystemsViewModel
 import com.tadams.tcars.ui.theme.TCARSTheme
 import com.tadams.tcars.ui.theme.tcarsSubheader
 import com.tadams.tcars.ui.widget.Bar
@@ -56,6 +60,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Content(modifier: Modifier = Modifier) {
+    val viewModel = SystemsViewModel()
     Column(modifier = modifier) {
         BarFrame(
             startColumn = {
@@ -85,9 +90,11 @@ fun Content(modifier: Modifier = Modifier) {
             Modifier.weight(1f),
             startColumn = {
                 BarColumn(true) {
-                    ShuttleCluster.forEach {
+                    ShuttleCluster.forEachIndexed { index, it ->
                         BarButton(
-                            {},
+                            {
+                                viewModel.selectedCluster.value = index
+                            },
                             Modifier.fillMaxWidth(),
                         ) {
                             Text(it.displayName)
@@ -101,50 +108,17 @@ fun Content(modifier: Modifier = Modifier) {
             Column(
                 modifier.verticalScroll(ss)
             ) {
-                Text(
-                    "Header".uppercase(),
-                    Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.tcarsSubheader()
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text =             "Exceeding reaction chamber thermal limit. We have begun power-supply " +
-                        "calibration. Force fields have been established on all turbo lifts" +
-                        " and crawlways. Computer, run a level-two diagnostic on warp-drive" +
-                        " systems. Antimatter containment positive. Warp drive within" +
-                        " normal parameters. I read an ion trail characteristic of a " +
-                        "freighter escape pod."
-                )
-                Spacer(Modifier.height(12.dp))
-                Row(verticalAlignment = Alignment.Bottom) {
-                    ProgressBar({0.15f}, Modifier.weight(1f))
-                    Text(
-                        "15",
-                        Modifier.padding(start = 8.dp),
-                        color = MaterialTheme.colorScheme.secondary
+                val cluster = viewModel.clusters[viewModel.selectedCluster.intValue]
+                cluster.forEach {
+                    SystemCommon(
+                        it.info.name,
+                        it.protected,
+                        it.info.description,
+                        powerSetting = it.powerSetting,
+                        powerMax = it.info.powerDraw
                     )
+                    Spacer(Modifier.height(12.dp))
                 }
-
-                Spacer(Modifier.height(4.dp))
-                ProgressBar({0.55f}, Modifier.fillMaxWidth())
-                Spacer(Modifier.height(4.dp))
-                ProgressBar({1f}, Modifier.fillMaxWidth())
-                Spacer(Modifier.height(4.dp))
-                ProgressBar({0f}, Modifier.fillMaxWidth())
-                val seekVal = remember { mutableStateOf(0.3f) }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    SeekBar(seekVal.value, {seekVal.value = it}, Modifier.weight(1f))
-                    Text(
-                        "${(seekVal.value * 100).toInt()}",
-                        Modifier.padding(start = 4.dp),
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-
-                }
-                Spacer(Modifier.height(4.dp))
             }
         }
     }
@@ -156,4 +130,53 @@ private fun ContentPreview() {
     TCARSTheme {
         Content()
     }
+}
+
+@Preview()
+@Composable
+private fun TestContent() {
+    Text(
+        "Header".uppercase(),
+        Modifier.fillMaxWidth(),
+        textAlign = TextAlign.End,
+        style = MaterialTheme.typography.tcarsSubheader()
+    )
+    Spacer(Modifier.height(4.dp))
+    Text(
+        text =             "Exceeding reaction chamber thermal limit. We have begun power-supply " +
+            "calibration. Force fields have been established on all turbo lifts" +
+            " and crawlways. Computer, run a level-two diagnostic on warp-drive" +
+            " systems. Antimatter containment positive. Warp drive within" +
+            " normal parameters. I read an ion trail characteristic of a " +
+            "freighter escape pod."
+    )
+    Spacer(Modifier.height(12.dp))
+    Row(verticalAlignment = Alignment.Bottom) {
+        ProgressBar({0.15f}, Modifier.weight(1f))
+        Text(
+            "15",
+            Modifier.padding(start = 8.dp),
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+
+    Spacer(Modifier.height(4.dp))
+    ProgressBar({0.55f}, Modifier.fillMaxWidth())
+    Spacer(Modifier.height(4.dp))
+    ProgressBar({1f}, Modifier.fillMaxWidth())
+    Spacer(Modifier.height(4.dp))
+    ProgressBar({0f}, Modifier.fillMaxWidth())
+    val seekVal = remember { mutableStateOf(0.3f) }
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        SeekBar(seekVal.value, {seekVal.value = it}, Modifier.weight(1f))
+        Text(
+            "${(seekVal.value * 100).toInt()}",
+            Modifier.padding(start = 4.dp),
+            color = MaterialTheme.colorScheme.secondary
+        )
+
+    }
+    Spacer(Modifier.height(4.dp))
 }

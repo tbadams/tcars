@@ -3,6 +3,7 @@ package com.tadams.tcars.ui.theme
 import androidx.compose.material.ripple.RippleAlpha
 import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
@@ -11,8 +12,10 @@ import androidx.compose.ui.graphics.Color
 
 fun tcarsColorScheme(
     primary: Color = Gold,
+    primaryContainer: Color = Sunflower,
     onPrimary: Color = Black,
     secondary: Color = Bluey,
+    secondaryContainer: Color = Ice,
     onSecondary: Color = Black,
     tertiary: Color = Tomato,
     onTertiary: Color = Black,
@@ -22,8 +25,10 @@ fun tcarsColorScheme(
     onBackground: Color = SpaceWhite
 ) = darkColorScheme(
     primary = primary,
+    primaryContainer = primaryContainer,
     onPrimary = onPrimary,
     secondary = secondary,
+    secondaryContainer = secondaryContainer,
     onSecondary = onSecondary,
     tertiary = tertiary,
     onTertiary = onTertiary,
@@ -57,6 +62,7 @@ fun TCARSTheme(
     ) {
         CompositionLocalProvider(
             androidx.compose.material.ripple.LocalRippleTheme provides TCARSRipple,
+            LocalContentColor provides colorScheme.onBackground
         ) {
             content()
         }

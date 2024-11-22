@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.lerp
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.tooling.preview.Preview
@@ -90,6 +91,10 @@ object SeekBarDefaults {
     fun colors(): SliderColors = SliderDefaults.colors(
         thumbColor = MaterialTheme.colorScheme.secondary,
         activeTrackColor = MaterialTheme.colorScheme.secondary,
+        activeTickColor = Transparent,
+        inactiveTickColor = Transparent,
+        disabledActiveTickColor = Transparent,
+        disabledInactiveTickColor = Transparent
     )
     @Composable
     @ExperimentalMaterial3Api

@@ -33,9 +33,12 @@ import com.tadams.tcars.ui.theme.BIG_BUTTON_WIDTH
 import com.tadams.tcars.ui.theme.Bluey
 import com.tadams.tcars.ui.theme.CONTENT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.CONTENT_PADDING
+import com.tadams.tcars.ui.theme.Green
 import com.tadams.tcars.ui.theme.HORIZONTAL_BAR_HEIGHT
+import com.tadams.tcars.ui.theme.HORIZONTAL_BAR_MIN_WIDTH
 import com.tadams.tcars.ui.theme.INTER_FRAME_GAP
 import com.tadams.tcars.ui.theme.INTRA_FRAME_GAP
+import com.tadams.tcars.ui.theme.Ice
 import com.tadams.tcars.ui.theme.SURFACE_PADDING
 import com.tadams.tcars.ui.theme.SWEPT_CORNER_RADIUS
 import com.tadams.tcars.ui.theme.Sunflower
@@ -79,10 +82,11 @@ fun BarColumn(
     bottomContent: @Composable (() -> Unit)? = {
 
     },
+    width: Dp = BIG_BUTTON_WIDTH,
     content: @Composable (ColumnScope.() -> Unit)? = {
         Bar(
             Modifier
-                .defaultMinSize(BIG_BUTTON_WIDTH, 8.dp)
+                .defaultMinSize(width, HORIZONTAL_BAR_MIN_WIDTH)
                 .fillMaxWidth()
                 .weight(1f),
         )
@@ -102,7 +106,9 @@ fun BarColumn(
                     topEnd = if (!isLeft) SWEPT_CORNER_RADIUS else 0.dp
                 ),
                 alignment = if (isLeft) Alignment.BottomEnd else Alignment.BottomStart
-            )
+            ) {
+                it()
+            }
         }
         content?.invoke(this)
         bottomContent?.let {
@@ -115,7 +121,66 @@ fun BarColumn(
                     bottomEnd = if (!isLeft) SWEPT_CORNER_RADIUS else 0.dp
                 ),
                 alignment = if (isLeft) Alignment.TopEnd else Alignment.TopStart
-            )
+            ) {
+                it()
+            }
+        }
+    }
+}
+
+@Composable
+fun BarRow(
+    isTop: Boolean = true,
+    modifier: Modifier = Modifier,
+    spacing:Dp = INTRA_FRAME_GAP,
+    startContent: @Composable (() -> Unit)? = {
+
+    },
+    endContent: @Composable (() -> Unit)? = {
+
+    },
+    height: Dp = HORIZONTAL_BAR_HEIGHT,
+    content: @Composable (RowScope.() -> Unit)? = {
+        Bar(
+            Modifier
+                .defaultMinSize(height, HORIZONTAL_BAR_MIN_WIDTH)
+                .fillMaxHeight()
+                .weight(1f),
+        )
+    }
+) {
+    Row(
+        modifier.height(IntrinsicSize.Max),
+        Arrangement.spacedBy(spacing)
+    ) {
+        startContent?.let {
+            Bar(
+                Modifier
+                    .fillMaxHeight()
+                    .defaultMinSize(SWEPT_CORNER_RADIUS, SWEPT_CORNER_RADIUS),
+                shape = RoundedCornerShape(
+                    topStart = if (isTop) SWEPT_CORNER_RADIUS else 0.dp,
+                    bottomStart = if (!isTop) SWEPT_CORNER_RADIUS else 0.dp
+                ),
+                alignment = Alignment.BottomEnd
+            ) {
+                it()
+            }
+        }
+        content?.invoke(this)
+        endContent?.let {
+            Bar(
+                Modifier
+                    .fillMaxHeight()
+                    .defaultMinSize(SWEPT_CORNER_RADIUS, SWEPT_CORNER_RADIUS),
+                shape = RoundedCornerShape(
+                    topEnd = if (isTop) SWEPT_CORNER_RADIUS else 0.dp,
+                    bottomEnd = if (!isTop) SWEPT_CORNER_RADIUS else 0.dp
+                ),
+                alignment = Alignment.BottomEnd
+            ) {
+                it()
+            }
         }
     }
 }
@@ -182,6 +247,73 @@ fun BarFrame(
             Arrangement.spacedBy(INTRA_FRAME_GAP)
         ) {
             endColumn?.invoke(this)
+        }
+    }
+}
+
+@Composable
+fun WideBarFrame(
+    modifier: Modifier = Modifier,
+    startColumn: @Composable (ColumnScope.() -> Unit)? = { Bar(Modifier.fillMaxHeight())},
+    endColumn: @Composable (ColumnScope.() -> Unit)? = { Bar(Modifier.fillMaxHeight())},
+    topRow: @Composable (RowScope.() -> Unit)? = { BarRow(true)},
+    bottomRow: @Composable (RowScope.() -> Unit)? = null,
+    contentShape: Shape = RoundedCornerShape(
+        if (startColumn != null && topRow != null) CONTENT_CORNER_RADIUS else 0.dp,
+        if (endColumn != null && topRow != null) CONTENT_CORNER_RADIUS else 0.dp,
+        if (endColumn != null && bottomRow != null) CONTENT_CORNER_RADIUS else 0.dp,
+        if (startColumn != null && bottomRow != null) CONTENT_CORNER_RADIUS else 0.dp
+    ),
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier
+            .width(IntrinsicSize.Max)
+            .height(IntrinsicSize.Max)
+            .padding(INTER_FRAME_GAP / 2)
+    ) {
+        Row(
+            Modifier.height(IntrinsicSize.Max),
+            Arrangement.spacedBy(INTRA_FRAME_GAP)
+        ) {
+            topRow?.invoke(this)
+        }
+        Row(
+            Modifier.weight(1f)
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
+            ) {
+                startColumn?.invoke(this)
+            }
+            Box(
+                Modifier.weight(1f).background(MaterialTheme.colorScheme.surface)
+            ) {
+                Box(
+                    Modifier
+                        .background(MaterialTheme.colorScheme.background, contentShape)
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .padding(CONTENT_PADDING)
+                ) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.onBackground
+                    ) {
+                        content()
+                    }
+                }
+            }
+            Column (
+                verticalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
+            ) {
+                endColumn?.invoke(this)
+            }
+        }
+        Row(
+            Modifier.height(IntrinsicSize.Max),
+            Arrangement.spacedBy(INTRA_FRAME_GAP)
+        ) {
+            bottomRow?.invoke(this)
         }
     }
 }
@@ -265,6 +397,21 @@ private fun PreviewTopRightFrame() {
                 BarColumn(false, bottomContent = null)
             },
             bottomRow = null
+        ) {
+            Text(
+                "You saw something as tasty as meat, but inorganically materialized out " +
+                    "of patterns used by our transporters."
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewTopWideFrame() {
+    TCARSTheme(tcarsColorScheme(Green, onBackground = Ice)) {
+        WideBarFrame(
+            topRow = {BarRow(true)}
         ) {
             Text(
                 "You saw something as tasty as meat, but inorganically materialized out " +

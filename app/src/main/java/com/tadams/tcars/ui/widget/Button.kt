@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -28,8 +28,10 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tadams.tcars.ui.theme.BIG_BUTTON_WIDTH
+import com.tadams.tcars.ui.theme.HORIZONTAL_BAR_HEIGHT
 import com.tadams.tcars.ui.theme.SURFACE_PADDING
 import com.tadams.tcars.ui.theme.TCARSTheme
 
@@ -38,15 +40,10 @@ fun Button(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = ButtonDefaults.shape,
+    shape: Shape = androidx.compose.material3.ButtonDefaults.shape,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     border: BorderStroke? = null,
-    contentPadding: PaddingValues = PaddingValues(
-        16.dp,
-        8.dp,
-        16.dp,
-        8.dp
-    ),
+    contentPadding: PaddingValues = ButtonDefaults.padding(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     content: @Composable RowScope.() -> Unit
 ) {
@@ -107,6 +104,57 @@ fun BarButton(
         content = content
     )
 }
+
+@Composable
+fun SmallButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
+    border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.padding(vertical = 4.dp),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable RowScope.() -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.defaultMinSize(HORIZONTAL_BAR_HEIGHT, HORIZONTAL_BAR_HEIGHT),
+        enabled = enabled,
+        shape = CircleShape,
+        colors = colors,
+        border = border,
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+    ) {
+        content()
+    }
+}
+
+object ButtonDefaults {
+    val ButtonVerticalPadding = 8.dp
+    val ButtonHorizontalPadding = 16.dp
+
+    @Composable
+    fun padding(
+        horizontal:Dp = ButtonHorizontalPadding,
+        vertical:Dp = ButtonVerticalPadding,
+    ) = PaddingValues(horizontal, vertical, horizontal, vertical)
+
+    @Composable
+    fun buttonColors(
+        containerColor: Color = Color.Unspecified,
+        contentColor: Color = Color.Unspecified,
+        disabledContainerColor: Color = Color.Unspecified,
+        disabledContentColor: Color = Color.Unspecified,
+    ) = androidx.compose.material3.ButtonDefaults.buttonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor
+    )
+
+}
+
 @Composable
 internal fun ProvideContentColorTextStyle(
     contentColor: Color,
@@ -138,6 +186,18 @@ fun PreviewButton () {
 fun PreviewBarButton () {
     TCARSTheme {
         BarButton(
+            onClick = { /*TODO*/ }
+        ) {
+            Text("BUTTON")
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewSmallButton () {
+    TCARSTheme {
+        SmallButton(
             onClick = { /*TODO*/ }
         ) {
             Text("BUTTON")
