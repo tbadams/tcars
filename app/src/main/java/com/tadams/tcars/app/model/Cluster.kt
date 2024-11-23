@@ -6,24 +6,24 @@ data class Cluster (
     val systems: List<SystemInfo>
 )
 
+const val ID_POWER = "power"
+
 val ShuttleCluster = listOf(
 //    Cluster("ship", "SHIP"),
     Cluster(
-        "power",
+        ID_POWER,
         "POWER",
         listOf(
             SystemInfo(
                 SystemType.Power,
                 "Impulse Fusion Core",
-                -755,
-                maxPowerDraw = -755,
+                -2455,
                 description = "The Aberash-Makkonen sublight pulse drive consists of a small fusion reactor, 2 primary thrust ports and 16 Reaction Control System nozzles for fine maneuvering. In addition to powering ships without warp cores, electroplasma can be passed through a subspace filter and vented to generate momentum. A status bar displays the the current flight pattern, and when enabled by the pilot, suggestions can be made."
             ),
             SystemInfo(
                 SystemType.Power,
                 "Warp Antimatter Reactor",
-                -9800,
-                maxPowerDraw = -9800
+                -10800,
             )
         )
     ),

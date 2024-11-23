@@ -33,8 +33,8 @@ class SystemsViewModel: ViewModel() {
         get() = ShipPower(
             supply = genSystems.sumOf { -it.curDraw },
             maxSupply = genSystems.sumOf { -it.info.maxPowerDraw },
-            protectedLoad = systems.filter { it.protected.value }.sumOf { it.curDraw },
-            unprotectedLoad = systems.filter { !it.protected.value }.sumOf { it.curDraw },
+            protectedLoad = drawSystems.filter { it.protected.value }.sumOf { it.curDraw },
+            unprotectedLoad = drawSystems.filter { !it.protected.value }.sumOf { it.curDraw },
             maxLoad = maxLoad
         )
 }

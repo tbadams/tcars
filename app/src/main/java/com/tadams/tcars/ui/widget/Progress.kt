@@ -1,12 +1,16 @@
 package com.tadams.tcars.ui.widget
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -21,8 +25,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.offset
+import com.tadams.tcars.app.ui.MAX_TEMP
+import com.tadams.tcars.app.ui.tempColor
+import com.tadams.tcars.ui.theme.LABEL_PADDING
 import com.tadams.tcars.ui.theme.LinearIndicatorHeight
 import com.tadams.tcars.ui.theme.LinearIndicatorUnselectedHeightFraction
+import com.tadams.tcars.ui.theme.MIN_LABEL_WIDTH
 import com.tadams.tcars.ui.theme.TCARSTheme
 import kotlin.math.abs
 
@@ -46,6 +54,40 @@ fun ProgressBar(
         val strokeWidth = size.height
         drawLinearIndicatorTrack(coercedProgress(), 1f,trackColor, strokeWidth * LinearIndicatorUnselectedHeightFraction, strokeCap)
         drawLinearIndicator(0f, coercedProgress(), color, strokeWidth, strokeCap)
+    }
+}
+
+@Composable
+fun ProgressBar(
+    progress: () -> Float,
+    valueLabel: String,
+    modifier: Modifier = Modifier,
+    startLabel: String? = null,
+    color: Color = MaterialTheme.colorScheme.secondary,
+    trackColor: Color = ProgressIndicatorDefaults.linearTrackColor,
+) {
+    Row(
+       modifier,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        if (startLabel != null) {
+            Text(
+                startLabel,
+                Modifier.padding(end = LABEL_PADDING).defaultMinSize(MIN_LABEL_WIDTH),
+                color = color
+            )
+        }
+        ProgressBar(
+            progress,
+            Modifier.weight(1f),
+            color = color,
+            trackColor = trackColor
+        )
+        Text(
+            valueLabel,
+            Modifier.padding(start = LABEL_PADDING),
+            color = color
+        )
     }
 }
 
@@ -139,5 +181,13 @@ fun PreviewProgress() {
 fun PreviewBigProgress() {
     TCARSTheme {
         ProgressBar({0.88f}, Modifier.fillMaxWidth(), )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewProgressLabeled() {
+    TCARSTheme {
+        ProgressBar({0.45f}, "45", startLabel =  "PROGRESS")
     }
 }

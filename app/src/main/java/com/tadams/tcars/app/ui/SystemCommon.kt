@@ -35,6 +35,7 @@ import com.tadams.tcars.ui.theme.Black
 import com.tadams.tcars.ui.theme.Blue
 import com.tadams.tcars.ui.theme.Green
 import com.tadams.tcars.ui.theme.INTRA_FRAME_GAP
+import com.tadams.tcars.ui.theme.MIN_LABEL_WIDTH
 import com.tadams.tcars.ui.theme.Mars
 import com.tadams.tcars.ui.theme.Orange
 import com.tadams.tcars.ui.theme.SWEPT_CORNER_RADIUS
@@ -161,7 +162,7 @@ fun SystemCommon(
                 ) {
                     Text(
                         "%",
-                        Modifier.padding(end = 8.dp).defaultMinSize(27.dp),
+                        Modifier.padding(end = 8.dp).defaultMinSize(MIN_LABEL_WIDTH),
                         color = MaterialTheme.colorScheme.secondary
                     )
                     val maxPowerFraction = powerMax.toFloat() / powerDraw
@@ -180,19 +181,11 @@ fun SystemCommon(
                     )
                 }
                 Row(verticalAlignment = Alignment.Bottom) {
-                    Text(
-                        "LOAD",
-                        Modifier.padding(end = 8.dp),
-                        color = MaterialTheme.colorScheme.secondary
-                    )
                     ProgressBar(
                         {powerActual.toFloat() / powerDraw},
-                        Modifier.weight(1f)
-                    )
-                    Text(
                         "${abs(powerActual)}",
-                        Modifier.padding(start = 8.dp),
-                        color = MaterialTheme.colorScheme.secondary
+                        Modifier.weight(1f),
+                        "LOAD"
                     )
                 }
             }

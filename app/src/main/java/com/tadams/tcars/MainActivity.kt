@@ -28,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.tadams.tcars.app.model.ID_POWER
 import com.tadams.tcars.app.model.ShuttleCluster
+import com.tadams.tcars.app.ui.PowerWidget
 import com.tadams.tcars.app.ui.SystemCommon
 import com.tadams.tcars.app.ui.SystemsViewModel
 import com.tadams.tcars.ui.theme.TCARSTheme
@@ -107,7 +109,9 @@ fun Content(modifier: Modifier = Modifier) {
                             Text(it.displayName)
                         }
                     }
-                    Bar(Modifier.fillMaxWidth().weight(1f))
+                    Bar(Modifier
+                        .fillMaxWidth()
+                        .weight(1f))
                 }
             }
         ) {
@@ -116,6 +120,11 @@ fun Content(modifier: Modifier = Modifier) {
                 modifier.verticalScroll(ss)
             ) {
                 val cluster = viewModel.clusters[viewModel.selectedCluster.intValue]
+               val power = viewModel.power
+                if (ShuttleCluster[viewModel.selectedCluster.intValue].id == ID_POWER) {
+                    PowerWidget(power)
+                    Spacer(Modifier.height(8.dp))
+                }
                 cluster.forEach {
                     SystemCommon(
                         it.info.name,
@@ -124,6 +133,11 @@ fun Content(modifier: Modifier = Modifier) {
                         powerSetting = it.powerSetting,
                         powerDraw = it.info.powerDraw,
                         powerMax = it.info.maxPowerDraw,
+                        powerActual = (if (it.protected.value) {
+                            viewModel.power.protectedRatio * it.curDraw
+                        } else {
+                            viewModel.power.unprotectedRatio * it.curDraw
+                        }).toInt(),
                         noSafety = it.info.powerDraw < 0
                     )
                     Spacer(Modifier.height(12.dp))
