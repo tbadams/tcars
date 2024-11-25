@@ -18,17 +18,6 @@ import com.tadams.tcars.ui.widget.ProgressBar
 import kotlin.math.max
 import kotlin.math.min
 
-@Composable
-fun PowerSystemBody(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-    ) {
-
-    }
-}
-
 data class ShipPower(
     val supply: Int,
     val maxSupply: Int,
@@ -60,21 +49,21 @@ fun PowerWidget(
     ) {
         ProgressBar(
             { power.supply.toFloat() / power.maxSupply.toFloat() },
-            "${power.supply} / ${power.maxSupply}",
+            "${power.supply} " , // ${power.maxSupply}",
             startLabel = "OUT",
         )
         ProgressBar(
             { power.totalLoad.toFloat() / power.maxLoad.toFloat()},
-            "${power.totalLoad} / ${power.maxLoad}",
+            "${power.totalLoad} ", // ${power.maxLoad}",
             startLabel = "LOAD",
         )
         ProgressBar(
-            { power.protectedSupply.toFloat() / power.protectedLoad.toFloat()},
+            { power.protectedSupply.toFloat() / max(power.protectedLoad.toFloat(), 1f)},
             "${power.protectedSupply} / ${power.protectedLoad}",
             startLabel = "PROT",
         )
         ProgressBar(
-            { power.unprotectedSupply.toFloat() / power.unprotectedLoad.toFloat()},
+            { power.unprotectedSupply.toFloat() / max(power.unprotectedLoad.toFloat(), 1f)},
             "${power.unprotectedSupply} / ${power.unprotectedLoad}",
             startLabel = "FREE",
         )
