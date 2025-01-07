@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
 fun Content(modifier: Modifier = Modifier) {
     val viewModel = SystemsViewModel()
     Column(modifier = modifier) {
-        BarFrame(
+        BarFrame( // Header Frame
             startColumn = {
                 BarColumn(
                     true,
@@ -89,7 +89,7 @@ fun Content(modifier: Modifier = Modifier) {
                 }
             }
         }
-        BarFrame(
+        BarFrame( // Content Frame
             Modifier.weight(1f),
             startColumn = {
                 BarColumn(true) {

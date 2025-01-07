@@ -186,7 +186,7 @@ fun BarRow(
 }
 
 @Composable
-fun BarFrame(
+fun BarFrame( // Row then columns
     modifier: Modifier = Modifier,
     startColumn: @Composable (ColumnScope.() -> Unit)? = {BarColumn(true)},
     endColumn: @Composable (ColumnScope.() -> Unit)? = null,
@@ -205,13 +205,13 @@ fun BarFrame(
             .height(IntrinsicSize.Max)
             .padding(vertical = INTER_FRAME_GAP / 2)
     ) {
-        Column(
+        Column( // Start column
             Modifier.width(IntrinsicSize.Max),
             Arrangement.spacedBy(INTRA_FRAME_GAP)
         ) {
             startColumn?.invoke(this)
         }
-        Column(
+        Column( // Content + top/bottom bars column
             Modifier.weight(1f)
         ) {
             Row(
@@ -219,7 +219,7 @@ fun BarFrame(
             ) {
                 topRow?.invoke(this)
             }
-            Box(
+            Box( // Content
                 Modifier.weight(1f).background(MaterialTheme.colorScheme.surface)
             ) {
                     Box(
@@ -242,7 +242,7 @@ fun BarFrame(
                 bottomRow?.invoke(this)
             }
         }
-        Column(
+        Column( // End column
             Modifier.width(IntrinsicSize.Max),
             Arrangement.spacedBy(INTRA_FRAME_GAP)
         ) {
@@ -252,7 +252,7 @@ fun BarFrame(
 }
 
 @Composable
-fun WideBarFrame(
+fun WideBarFrame( // Column then rows
     modifier: Modifier = Modifier,
     startColumn: @Composable (ColumnScope.() -> Unit)? = { Bar(Modifier.fillMaxHeight())},
     endColumn: @Composable (ColumnScope.() -> Unit)? = { Bar(Modifier.fillMaxHeight())},
@@ -272,13 +272,13 @@ fun WideBarFrame(
             .height(IntrinsicSize.Max)
             .padding(INTER_FRAME_GAP / 2)
     ) {
-        Row(
+        Row(  // Top Row
             Modifier.height(IntrinsicSize.Max),
             Arrangement.spacedBy(INTRA_FRAME_GAP)
         ) {
             topRow?.invoke(this)
         }
-        Row(
+        Row( // Content + Start/End columns
             Modifier.weight(1f)
         ) {
             Column(
@@ -309,7 +309,7 @@ fun WideBarFrame(
                 endColumn?.invoke(this)
             }
         }
-        Row(
+        Row( // End Row
             Modifier.height(IntrinsicSize.Max),
             Arrangement.spacedBy(INTRA_FRAME_GAP)
         ) {
