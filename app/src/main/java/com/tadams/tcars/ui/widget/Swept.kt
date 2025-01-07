@@ -191,7 +191,7 @@ fun BarFrame( // Row then columns
     startColumn: @Composable (ColumnScope.() -> Unit)? = {BarColumn(true)},
     endColumn: @Composable (ColumnScope.() -> Unit)? = null,
     topRow: @Composable (RowScope.() -> Unit)? = { Bar(Modifier.fillMaxWidth())},
-    bottomRow: @Composable (RowScope.() -> Unit)? = { Bar(Modifier.fillMaxWidth())},
+    bottomRow: @Composable (RowScope.() -> Unit)? = { Bar(Modifier.fillMaxHeight().fillMaxWidth())},
     contentShape: Shape = RoundedCornerShape(
         if (startColumn != null && topRow != null) CONTENT_CORNER_RADIUS else 0.dp,
         if (endColumn != null && topRow != null) CONTENT_CORNER_RADIUS else 0.dp,
@@ -215,6 +215,7 @@ fun BarFrame( // Row then columns
             Modifier.weight(1f)
         ) {
             Row(
+                Modifier.height(IntrinsicSize.Max),
                 horizontalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
             ) {
                 topRow?.invoke(this)
@@ -237,7 +238,9 @@ fun BarFrame( // Row then columns
                     }
             }
             Row(
-                horizontalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
+                Modifier.height(IntrinsicSize.Max),
+                horizontalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP),
+                verticalAlignment = Alignment.Bottom
             ) {
                 bottomRow?.invoke(this)
             }
@@ -282,6 +285,7 @@ fun WideBarFrame( // Column then rows
             Modifier.weight(1f)
         ) {
             Column(
+                Modifier.width(IntrinsicSize.Max),
                 verticalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
             ) {
                 startColumn?.invoke(this)
@@ -304,6 +308,7 @@ fun WideBarFrame( // Column then rows
                 }
             }
             Column (
+                Modifier.width(IntrinsicSize.Max),
                 verticalArrangement = Arrangement.spacedBy(INTRA_FRAME_GAP)
             ) {
                 endColumn?.invoke(this)
