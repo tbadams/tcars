@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -113,6 +114,27 @@ fun Content(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .weight(1f))
                 }
+            },
+            bottomRow = {
+                Bar(Modifier.fillMaxHeight().weight(1f))
+                Text(
+                    "CREW 3",
+                    Modifier.padding(start = 4.dp, end = 4.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Bar(Modifier.fillMaxHeight())
+                Text(
+                    "HULL 100",
+                    Modifier.padding(start = 4.dp, end = 4.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Bar(Modifier.fillMaxHeight())
+                Text(
+                    "SHIELD 100",
+                    Modifier.padding(start = 4.dp, end = 4.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Bar(Modifier.fillMaxHeight())
             }
         ) {
             val ss = rememberScrollState()

@@ -32,13 +32,20 @@ fun tcarsType(
         fontSize = 16.sp,
         letterSpacing = -(0.0).sp
     ),
+    bodySmall: TextStyle = TextStyle(
+        fontFamily = antonio,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 16.sp,
+        letterSpacing = -(0.0).sp
+    ),
 ) = Typography(
     headlineLarge = title,
     headlineMedium = title,
     headlineSmall = title,
     bodyLarge = body,
     bodyMedium = body,
-    bodySmall = body,
+    bodySmall = bodySmall,
     titleLarge = subheader,
     titleMedium = subheader,
     titleSmall = subheader,
